@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прогноз цены BTC</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: crimson;
+        }
+
+        .btc-data {
+            max-width: 500px;
+            margin: 30px auto 10px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btc-data ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .btc-data li {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .btc-data li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="btc-data">
+        <h2>📊 Последние данные по BTC:</h2>
+        <ul>
+            <li><strong>Open:</strong> {{ btc_features["Open"] }}</li>
+            <li><strong>High:</strong> {{ btc_features["High"] }}</li>
+            <li><strong>Low:</strong> {{ btc_features["Low"] }}</li>
+            <li><strong>Close:</strong> {{ btc_features["Close"] }}</li>
+            <li><strong>Volume:</strong> {{ btc_features["Volume"] }}</li>
+            <li><strong>Change (%):</strong> {{ btc_features["Change"] }}</li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h2>Введите данные для прогноза BTC</h2>
+        <form method="POST">
+            <label for="open">Open:</label>
+            <input type="number" name="open" step="any" value="{{ btc_features['Open'] }}" required>
+
+            <label for="high">High:</label>
+            <input type="number" name="high" step="any" value="{{ btc_features['High'] }}" required>
+
+            <label for="low">Low:</label>
+            <input type="number" name="low" step="any" value="{{ btc_features['Low'] }}" required>
+
+            <label for="close">Close:</label>
+            <input type="number" name="close" step="any" value="{{ btc_features['Close'] }}" required>
+
+            <label for="volume">Volume:</label>
+            <input type="number" name="volume" step="any" value="{{ btc_features['Volume'] }}" required>
+
+            <label for="change">Change (%):</label>
+            <input type="number" name="change" step="any" value="{{ btc_features['Change'] }}" required>
+
+            <input type="submit" value="Предсказать">
+        </form>
+
+        {% if prediction %}
+        <div class="result {% if 'ВЫРАСТЕТ' in prediction %}positive{% else %}negative{% endif %}">
+            Результат: {{ prediction }}
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
